@@ -13,11 +13,10 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
 import {
     Table,
     TableBody,
@@ -26,10 +25,16 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Item } from "@/lib/Types/Spotify"
+
+interface DataTableProps {
+    Id:number,
+    Track:string,
+    Artist:string,
+    Album:string,
+}
 
 
-export const columns: ColumnDef<Item>[] = [
+export const columns: ColumnDef<DataTableProps>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -83,14 +88,17 @@ export const columns: ColumnDef<Item>[] = [
     },
 ]
 
-export function DataTableDemo({ data }: { data: Item[] }) {
+export function DataTableDemo({ data }: { data: DataTableProps[] }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
     )
-    const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({})
+    const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
+    React.useEffect(() => {
+        table.toggleAllRowsSelected(true);
+    },[data]);
+
 
     const table = useReactTable({
         data,
@@ -135,6 +143,7 @@ export function DataTableDemo({ data }: { data: Item[] }) {
                     </TableHeader>
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
+                            
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
                                     key={row.id}
@@ -175,7 +184,7 @@ export function DataTableDemo({ data }: { data: Item[] }) {
                         onClick={() => table.previousPage()}
                         disabled={!table.getCanPreviousPage()}
                     >
-                        Previous
+                        Previous 
                     </Button>
                     <Button
                         variant="outline"
@@ -183,7 +192,7 @@ export function DataTableDemo({ data }: { data: Item[] }) {
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        Next
+                        Next 
                     </Button>
                 </div>
             </div>
