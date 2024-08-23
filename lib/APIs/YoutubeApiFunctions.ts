@@ -2,7 +2,6 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { NextResponse } from "next/server";
 
 
 
@@ -17,19 +16,24 @@ export const youtubeOAuth = async () => {
 }
 
 export const getYouTubePlaylistItems = async (url: string) => {
-    const playlistId = url;
+    const playlistId = url.split('list=')[1];
     const cookieStore = cookies();
     const access_token = cookieStore.get('youtube_access_token')?.value;
     console.log(playlistId, access_token);
+    if(access_token==null){
+        return {error:{message: 'Access token not found',status: 401}};
+    }else if(playlistId==null){
+        return {error:{message: 'Playlist ID not found',status: 400}};
+    }
     try {
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}`, {
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50`, {
             headers: { 'Authorization': `Bearer ${access_token}`, 'Content-Type': 'application/json' }
         });
         const data = await response.json();
         // console.log(data);
         if (data.error) {
-            console.log('error', data.error);
-            return data.error;
+            console.log('error', data.errors);
+            return {error:{message: data.error.message , status: data.error.code}};
         }
         else{
             console.log('success', data);
@@ -45,6 +49,6 @@ export const getYouTubePlaylistItems = async (url: string) => {
         }
     } catch (e) {
         console.log(e);
-        return NextResponse.json({ error: e });
+        return e;
     }
 }
