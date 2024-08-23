@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import {JetBrains_Mono, Ubuntu } from "next/font/google";
 import { SiBluesound } from "react-icons/si";
+import { Toaster } from "@/components/ui/sonner";
 
 
 export const metadata: Metadata = {
@@ -40,6 +41,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+           <Toaster position="top-right" richColors duration={3000}/>
           <div className="flex flex-row gap-1 items-center h-[6%] max-h-[6%] p-2">
             <SiBluesound size={25} className="text-muted-foreground"/>
             <p>Sound Shuttle</p>
