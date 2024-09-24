@@ -3,6 +3,7 @@
 ## Overview
 
 Sound Shuttle is a seamless web application developed using **Next.js**, **TypeScript**, **ShadCN**, and **Tailwind CSS** that allows users to effortlessly transfer music playlists between **YouTube** and **Spotify**. By leveraging the **Google Data API** and **Spotify API** with **OAuth 2.0**, Sound Shuttle provides a secure and streamlined experience for managing playlists across multiple platforms.
+Watch demo at - https://youtu.be/6hG34ByJBy8
 
 ## Features
 
