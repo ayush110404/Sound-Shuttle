@@ -17,7 +17,7 @@ export default function Component() {
               <h3 className="text-2xl font-bold">Transfer from Spotify</h3>
             </div>
             <p className="text-muted-foreground mb-6">Seamlessly transfer your playlists from Spotify to YouTube.</p>
-            <Button onClick={()=>{spotifyOAuth()}} variant="default">Transfer to YouTube</Button>
+            <Button onClick={()=>{spotifyOAuth('spotify')}} variant="default">Transfer to YouTube</Button>
           </Card>
           <Card className="bg-card p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex items-center mb-4">

@@ -28,7 +28,6 @@ export async function GET(req:NextRequest) {
     } else {
         console.log('success', data.access_token, data.refresh_token,data.expires_in);
         cookieStorage.set('youtube_access_token',data.access_token ,{maxAge: data.expires_in*100});
-        cookieStorage.set('youtube_refresh_token',data.refresh_token);
         return NextResponse.redirect('http://localhost:3000/transfer?source=youtube');
     }
 }

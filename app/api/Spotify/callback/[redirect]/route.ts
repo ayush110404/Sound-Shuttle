@@ -6,17 +6,17 @@ import { SiXiaohongshu } from 'react-icons/si';
 
 const client_id = process.env.SPOTIFY_CLIENT_ID
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-const redirect_uri = process.env.SPOTIFY_REDIRECT_URI
 
-export async function GET(req:NextRequest) {
+export async function GET(req:NextRequest,{ params }: { params: { redirect: string } }) {
   const code = req.nextUrl.searchParams.get('code');
   const state  = req.nextUrl.searchParams.get('state');
-  const redirect_to  = req.nextUrl.searchParams.get('redirect_to') || 'spotify';
+  const {redirect}=params;
+  const redirect_uri = `http://localhost:3000/api/Spotify/callback/${redirect}`
   const storedState = req.cookies ? req.cookies.get('spotify_auth_state')?.value : null;
   const cookieStorage = cookies();
   const all = req.nextUrl.searchParams;
   // console.log(state,storedState)
-  console.log('callback called ........',all)
+  console.log('callback called ........',redirect)
   if (state === null || state != storedState) {
     console.error('state mismatch');
     return NextResponse.redirect('http://localhost:3000/');
@@ -47,7 +47,7 @@ export async function GET(req:NextRequest) {
       console.log(userData);
       cookieStorage.set('spotify_access_token', access_token , {maxAge: 3600});
       cookieStorage.set('spotify_refresh_token', refresh_token);
-      return NextResponse.redirect(`http://localhost:3000/transfer?source=${redirect_to}`);
+      return NextResponse.redirect(`http://localhost:3000/transfer?source=${redirect}`);
     } else {
       console.error('Failed to get access token');
       return NextResponse.redirect('/');

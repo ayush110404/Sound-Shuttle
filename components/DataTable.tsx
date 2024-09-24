@@ -88,7 +88,7 @@ export const columns: ColumnDef<DataTableProps>[] = [
     },
 ]
 
-export function DataTableDemo({ data }: { data: DataTableProps[] }) {
+export function DataTableDemo({ data , thisRef }: { data: DataTableProps[] , thisRef: React.MutableRefObject<string[]>}) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -98,6 +98,11 @@ export function DataTableDemo({ data }: { data: DataTableProps[] }) {
     React.useEffect(() => {
         table.toggleAllRowsSelected(true);
     },[data]);
+    React.useEffect(() => {
+        // console.log(Object.values(table.getSelectedRowModel().rowsById).map(item => item.original.Track))
+        thisRef.current = Object.values(table.getSelectedRowModel().rowsById).map(item => item.original.Track);
+
+    },[rowSelection]);
 
 
     const table = useReactTable({
