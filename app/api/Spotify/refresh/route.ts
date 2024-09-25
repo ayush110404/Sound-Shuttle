@@ -2,8 +2,8 @@ import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import querystring from 'querystring';
 
-var client_id = 'fd383a84cf144bb0a8c9f47a94e541fa'; // your clientId
-var client_secret = 'cddf946359d7431da86968b0d1106f63'; // Your secret
+const client_id = process.env.SPOTIFY_CLIENT_ID; // your clientId
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
 
 export async function GET(req:NextRequest) {
     // console.log('refresh token called ........')
