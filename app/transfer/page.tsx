@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { DataTableDemo } from "@/components/DataTable"
 import { useRouter, useSearchParams } from "next/navigation"
 import { destinationSpotifyPlaylist, getSpotifyPlaylistItems, spotifyOAuth } from "@/lib/APIs/SpotifyApiFunctions"
-import { getYouTubePlaylistItems } from "@/lib/APIs/YoutubeApiFunctions"
+import { getYouTubePlaylistItems , destinationYoutubePlaylist, youtubeOAuth } from "@/lib/APIs/YoutubeApiFunctions"
 import { toast } from "sonner"
 import { BsCaretLeft, BsCaretRight } from "react-icons/bs"
 
@@ -43,12 +43,12 @@ export default function Component() {
   }
   const handleNext = async() => {
     console.log(selectedData.current);
-    const res = await destinationSpotifyPlaylist(selectedData.current);
+    const res = source=='spotify' ? await destinationYoutubePlaylist(selectedData.current) : await destinationSpotifyPlaylist(selectedData.current); ;
     console.log('response from server->',res);
     if(res.error){
       if(res.error.status === 401){ 
         toast.error('User Not Authorized');
-        spotifyOAuth('youtube');
+        source=='spotify' ? youtubeOAuth('spotify') : spotifyOAuth('youtube');
       }else{
         toast.error('Something went wrong');
       }
@@ -62,7 +62,7 @@ export default function Component() {
       <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xl">
         <Input
           type="text"
-          placeholder="Enter playlist URL"
+          placeholder={`Enter ${source} playlist URL`}
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           className="flex-1 text-base"
