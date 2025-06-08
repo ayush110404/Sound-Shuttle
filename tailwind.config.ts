@@ -1,4 +1,4 @@
-import { Anek_Devanagari, JetBrains_Mono, Ubuntu } from "next/font/google"
+import { Anek_Devanagari, Bricolage_Grotesque, JetBrains_Mono, Space_Grotesk, Ubuntu } from "next/font/google"
 import type { Config } from "tailwindcss"
 
 const config = {
@@ -21,7 +21,9 @@ const config = {
     extend: {
       fontFamily:{
         JetBrains_Mono:['var(--font-jetbrains-mono)'],
-        Ubuntu:['var(--font-ubuntu)']
+        Ubuntu:['var(--font-ubuntu)'],
+        Space_Grotesk:['var(--font-space-grotesk)'],
+        Bricolage_Grotesque:['var(--font-bricolage-grotesque)']
       },
       colors: {
         border: "hsl(var(--border))",
